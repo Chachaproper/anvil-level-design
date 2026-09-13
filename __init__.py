@@ -317,10 +317,12 @@ class LevelDesignPreferences(bpy.types.AddonPreferences):
         name="Measurement Label Size",
         description=(
             "Font size of the dimension labels drawn while building shapes. "
-            "Scaled by Blender's Resolution Scale, like the native edge-length overlay"
+            "0 follows Blender's Widget text style (Preferences > Themes > User Interface > Text Style), "
+            "matching the native edge-length overlay. "
+            "Scaled by Blender's Resolution Scale either way"
         ),
-        default=11,
-        min=6,
+        default=0,
+        min=0,
         max=64,
     )
 

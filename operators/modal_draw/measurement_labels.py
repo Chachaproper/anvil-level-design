@@ -90,15 +90,20 @@ def draw_measurement_segments(region, rv3d, space, unit_settings, theme_3d, segm
 def _label_font_size():
     """Return the label size in pixels.
 
-    The base size comes from the addon preferences and follows Blender's
-    Resolution Scale (and HiDPI pixel size) like the native edge-length
-    overlay, so labels stay readable on high-density displays.
+    By default the labels use the Widget text style, which is the font
+    Blender draws its own edge-length overlay with, so builder labels and
+    native measurements match. A non-zero preference overrides the base
+    size. Either way the result follows Blender's Resolution Scale (and
+    HiDPI pixel size) so labels stay readable on high-density displays.
     """
-    size = DEFAULT_FONT_SIZE
+    size = 0
     package_name = __package__.split('.', 1)[0]
     addon = bpy.context.preferences.addons.get(package_name)
     if addon is not None:
         size = addon.preferences.pref_measurement_label_size
+    if size <= 0:
+        ui_styles = bpy.context.preferences.ui_styles
+        size = ui_styles[0].widget.points if ui_styles else DEFAULT_FONT_SIZE
     ui_scale = bpy.context.preferences.system.ui_scale
     if ui_scale <= 0.0:
         # ui_scale is 0 without a window (e.g. background mode).

@@ -312,6 +312,18 @@ class LevelDesignPreferences(bpy.types.AddonPreferences):
         default=True,
     )
 
+    # === Viewport Display Settings ===
+    pref_measurement_label_size: bpy.props.IntProperty(
+        name="Measurement Label Size",
+        description=(
+            "Font size of the dimension labels drawn while building shapes. "
+            "Scaled by Blender's Resolution Scale, like the native edge-length overlay"
+        ),
+        default=11,
+        min=6,
+        max=64,
+    )
+
     # === Texture Browser User Settings ===
     texture_browser_preview_scale: bpy.props.FloatProperty(
         name="Texture Browser Icon Size",
@@ -406,6 +418,12 @@ class LevelDesignPreferences(bpy.types.AddonPreferences):
         box.separator()
         box.label(text="Scene Settings:")
         box.prop(self, "pref_default_unit_system")
+
+        # Viewport Display section
+        layout.separator()
+        layout.label(text="Viewport Display")
+        box = layout.box()
+        box.prop(self, "pref_measurement_label_size")
 
         # Keybindings section
         layout.separator()
